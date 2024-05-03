@@ -2,7 +2,7 @@ const UserService = require('../services/UserService')
 
 const createUser = async (req, res) => {
     try {
-        console.log("req.body: ", req.body)
+        // console.log("req.body: ", req.body)
         let { name, email, password, confirmPassword, phone } = req.body
         const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isCheckEmail = reg.test(email)
@@ -33,8 +33,31 @@ const createUser = async (req, res) => {
     }
 }
 
+let signIn = async (req, res) => {
+    try {
+        console.log("req.body: ", req.body)
+        let { email, password } = req.body
+
+        // if (!user || !password) {
+        //     return res.status(200).json({
+        //         status: 'Login fail',
+        //         message: 'The input is required'
+        //     })
+        // }
+
+        let signInRes = await UserService.signIn(req.body)
+        // console.log("signInRes", signInRes)
+        return res.status(200).json(signInRes)
+    } catch (error) {
+        return res.status(404).json({
+            message: error
+        })
+    }
+}
+
 module.exports = {
-    createUser
+    createUser,
+    signIn
 }
 
 

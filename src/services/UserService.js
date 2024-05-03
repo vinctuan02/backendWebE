@@ -22,12 +22,10 @@ const createUser = (inforUser) => {
                 name, email, password: passHash, phone
             })
 
-            console.log(createdUser)
-
             if (createdUser) {
                 resolve({
                     status: 'Oke',
-                    message: 'Oke'
+                    message: 'Create user successed.'
                 })
             }
 
@@ -37,6 +35,45 @@ const createUser = (inforUser) => {
     })
 }
 
+let signIn = (userInfor) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let { email, password } = userInfor
+            let passHash = bcrypt.hashSync(password, 10)
+            console.log(passHash)
+            let checkUser = await User.findOne({
+                email: email,
+                password: '$2b$10$qjTYBfS2AJ7fKho7RlIrQOWloSaNykb6IAj6X49chGksxFy7i0FfC'
+            })
+
+            console.log("check user: ", checkUser)
+
+            if (checkUser) {
+                console.log("Login success.")
+                resolve({
+                    status: 'Oke',
+                    message: 'Create user successed.'
+                })
+            } else {
+                console.log("Login fail")
+                resolve({
+                    status: 'Oke',
+                    message: 'Create user fail.'
+                })
+            }
+
+            resolve({
+                status: '??',
+                message: '??'
+            })
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
-    createUser
+    createUser,
+    signIn
 }

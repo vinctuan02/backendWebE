@@ -4,6 +4,9 @@ const dotenv = require('dotenv')
 const routes = require('./routers')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const test = require('./test.js')
+
+
 
 mongoose.set('strictQuery', false);
 
@@ -30,3 +33,5 @@ const port = process.env.PORT || 8080
 app.listen(port, () => {
     console.log("Server is running in port: ", port)
 })
+
+test.testFunc()
