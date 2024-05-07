@@ -1,12 +1,19 @@
 const bcrypt = require('bcrypt')
+const User = require('./models/UserModel')
 
 const testFunc = async () => {
-    console.log("Test Func: ")
-    let hasdedPass = bcrypt.hashSync('1', 10)
-    let checkPw = await bcrypt.compare('1', hasdedPass)
-    console.log(checkPw)
-    console.log("hasdedPass: ", hasdedPass)
-    return 0
+    // console.log("Test Func: ")
+    // let User1 = await User.findOne({
+    //     email: 'tuan1@gmail.com'
+    // })
+    // let pass = '1'
+    // hashedPass = User1.password
+
+    // let isPw = await bcrypt.compare(pass, hashedPass)
+
+    // console.log(isPw)
+    // console.log("User1: ", User1)
+    // return 0
 }
 
 module.exports = {
