@@ -64,8 +64,21 @@ const getDetailsProduct = async (req, res) => {
     }
 }
 
+const getProductByPage = async (req, res) => {
+    // console.log("getProductByPage :")
+    let { limit, page, sort, filter } = req.query
+    // console.log("req.query: ", limit, page)
+    try {
+        const respone = await ProductService.getProductByPage(limit || 4, page || 1, sort, filter)
+        return res.status(200).json(respone)
+    } catch (error) {
+        return res.status(404).json({
+            message: error
+        })
+    }
+}
+
 const getAllDetailsProduct = async (req, res) => {
-    // console.log("Update product")
     try {
         const respone = await ProductService.getAllDetailsProduct()
         return res.status(200).json(respone)
@@ -102,6 +115,7 @@ module.exports = {
     updateProduct,
     getDetailsProduct,
     deleteProduct,
+    getProductByPage,
     getAllDetailsProduct
 }
 

@@ -103,10 +103,61 @@ let getDetailsProduct = (idProduct) => {
     })
 }
 
+let getProductByPage = (limit, page, sort, filter) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log("limit, page, sort: ", limit, page, sort, filter)
+            const totalProduct = await Product.count()
+
+            if (filter) {
+                let lable = filter[0]
+                let DetailsProduct = await Product.find({ [lable]: { '$regex': filter[1] } }).skip((page - 1) * limit).limit(limit)
+                resolve({
+                    status: 'Oke',
+                    message: 'Get all details product was successful',
+                    data: DetailsProduct,
+                    totalProduct,
+                    pageCurrent: Number(page),
+                    totalPage: Math.ceil(totalProduct / limit)
+                })
+            }
+
+            if (sort) {
+                let objectSort = {}
+                objectSort[sort[1]] = sort[0]
+                // console.log("objectSort: ", objectSort)
+                let DetailsProduct = await Product.find().skip((page - 1) * limit).limit(limit).sort(objectSort)
+                resolve({
+                    status: 'Oke',
+                    message: 'Get all details product was successful',
+                    data: DetailsProduct,
+                    totalProduct,
+                    pageCurrent: Number(page),
+                    totalPage: Math.ceil(totalProduct / limit)
+                })
+            }
+
+            let DetailsProduct = await Product.find().skip((page - 1) * limit).limit(limit)
+
+            resolve({
+                status: 'Oke',
+                message: 'Get all details product was successful',
+                data: DetailsProduct,
+                totalProduct,
+                pageCurrent: Number(page),
+                totalPage: Math.ceil(totalProduct / limit)
+            })
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 let getAllDetailsProduct = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let allDetailsProduct = await Product.find()
+            const allDetailsProduct = await Product.find()
             resolve({
                 status: 'Oke',
                 message: 'Get all details product was successful',
@@ -157,5 +208,6 @@ module.exports = {
     updateProduct,
     getDetailsProduct,
     deleteProduct,
+    getProductByPage,
     getAllDetailsProduct
 }

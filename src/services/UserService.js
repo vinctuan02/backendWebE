@@ -12,7 +12,7 @@ const createUser = (inforUser) => {
 
             if (checkUser) {
                 resolve({
-                    status: 'Oke',
+                    status: 'ERR',
                     message: 'Email is already'
                 })
             } else {
@@ -46,18 +46,18 @@ let loginUser = (userInfor) => {
 
             if (!checkUser) {
                 resolve({
-                    status: 'Oke',
+                    status: 'ERR',
                     message: 'The user is not defined'
                 })
             }
 
-            console.log("checkUser: ", checkUser)
+            // console.log("checkUser: ", checkUser)
 
             let comparePassword = bcrypt.compareSync(password, checkUser.password)
 
             if (!comparePassword) {
                 resolve({
-                    status: 'Oke',
+                    status: 'ERR',
                     message: 'The password or user is incorrect'
                 })
             }
